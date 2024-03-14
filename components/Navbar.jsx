@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import logo from "@/assets/images/logo.png"
+import logo from "@/assets/images/logo-white.png"
 import profileDefault from "@/assets/images/profile.png"
 import { FaGoogle } from "react-icons/fa"
 import { usePathname } from "next/navigation"
@@ -12,7 +12,7 @@ import Link from "next/link"
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const pathname = usePathname()
 
