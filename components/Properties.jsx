@@ -1,5 +1,5 @@
 import properties from "@/properties.json"
-import Property from "./Property"
+import Property from "./PropertyDetails"
 
 const Properties = () => {
   return (
