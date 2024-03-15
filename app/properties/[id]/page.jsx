@@ -38,8 +38,9 @@ const PropertyPage = () => {
     return <h1 className="text-center text-2xl font-bold mt-10">Property Not Found.</h1>
   }
 
-  return (
-    !loading &&
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
     property && (
       <>
         <PropertyHeaderImage image={property.images[0]} />
