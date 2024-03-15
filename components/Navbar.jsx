@@ -74,6 +74,7 @@ const Navbar = () => {
                 width={0}
                 height={0}
                 sizes="100vw"
+                priority={true}
               />
 
               <span className="hidden md:block text-white text-2xl font-bold ml-2">
