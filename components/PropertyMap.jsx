@@ -1,6 +1,5 @@
 "use client"
-
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import "mapbox-gl/dist/mapbox-gl.css"
 import Map, { Marker } from "react-map-gl"
 import { setDefaults, fromAddress } from "react-geocode"
@@ -18,9 +17,8 @@ const PropertyMap = ({ property }) => {
     width: "100%",
     height: "500px",
   })
-
   const [loading, setLoading] = useState(true)
-  const [geoCodeError, setGeoCodeError] = useState(false)
+  const [geocodeError, setGeocodeError] = useState(false)
 
   setDefaults({
     key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY,
@@ -32,17 +30,18 @@ const PropertyMap = ({ property }) => {
     const fetchCoords = async () => {
       try {
         const res = await fromAddress(
-          `${property.location.street}${property.location.city}${property.location.state}${property.location.zipcode}`
+          `${property.location.street} ${property.location.city} ${property.location.state} ${property.location.zipcode}`
         )
 
-        //Check for results
+        //  Check for results
         if (res.results.length === 0) {
-          //No results found
-          setGeoCodeError(true)
+          // No results found
+          setGeocodeError(true)
           setLoading(false)
+          return
         }
 
-        const { lat, lng } = await res.results[0].geometry.location
+        const { lat, lng } = res.results[0].geometry.location
 
         setLat(lat)
         setLng(lng)
@@ -51,22 +50,23 @@ const PropertyMap = ({ property }) => {
           latitude: lat,
           longitude: lng,
         })
+
+        setLoading(false)
       } catch (error) {
         console.log(error)
-        setGeoCodeError(true)
+        setGeocodeError(true)
         setLoading(false)
       }
     }
+
     fetchCoords()
   }, [])
 
-  if (loading) {
-    return <Spinner loading={loading} />
-  }
+  if (loading) return <Spinner loading={loading} />
 
-  //Handle case where geoCoding failed
-  if (geoCodeError) {
-    return <div className="text-xl">No Location Data Found.</div>
+  // Handle case where geocoding failed
+  if (geocodeError) {
+    return <div className="text-xl">No location data found</div>
   }
 
   return (
@@ -83,11 +83,10 @@ const PropertyMap = ({ property }) => {
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
         <Marker longitude={lng} latitude={lat} anchor="bottom">
-          <Image src={pin} width={40} height={40} alt="" />
+          <Image src={pin} alt="location" width={40} height={40} />
         </Marker>
       </Map>
     )
   )
 }
-
 export default PropertyMap
