@@ -1,5 +1,6 @@
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null
 
+//Fetch multiple properties
 async function fetchProperties() {
   try {
     //Handle the case where the domain is not available yet
@@ -19,6 +20,7 @@ async function fetchProperties() {
   }
 }
 
+//Fetch single property
 async function fetchProperty(id) {
   try {
     if (!apiDomain) {
