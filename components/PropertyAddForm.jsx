@@ -234,7 +234,7 @@ const PropertyAddForm = () => {
               name="square_feet"
               className="border rounded w-full py-2 px-3"
               required
-              value={fields.baths}
+              value={fields.square_feet}
               onChange={handleChange}
             />
           </div>
