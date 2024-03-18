@@ -3,11 +3,11 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
+import Spinner from "@/components/Spinner"
 
 const Message = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read)
-
-  useEffect(() => {}, [])
+  const [isDeleted, setIsDeleted] = useState(false)
 
   const handleReadClick = async () => {
     try {
@@ -29,7 +29,23 @@ const Message = ({ message }) => {
       toast.error("Something went wrong")
     }
   }
-  const handleDelete = () => {}
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/messages/${message._id}`, { method: "DELETE" })
+
+      if (res.status === 200) {
+        toast.success("Message Deleted")
+        setIsDeleted(true)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Failed to delete the message")
+    }
+  }
+
+  if (isDeleted) {
+    return null
+  }
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
