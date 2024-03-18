@@ -3,11 +3,12 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
-import Spinner from "@/components/Spinner"
+import { useGlobalContext } from "@/app/context/GlobalContext"
 
 const Message = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read)
   const [isDeleted, setIsDeleted] = useState(false)
+  const { setUnreadCount } = useGlobalContext()
 
   const handleReadClick = async () => {
     try {
@@ -19,8 +20,10 @@ const Message = ({ message }) => {
         const data = await res.json()
         setIsRead(data.read)
         if (data.read === true) {
+          setUnreadCount((prev) => prev - 1)
           toast.success("Marked As Read")
         } else {
+          setUnreadCount((prev) => prev + 1)
           toast.success("Marked As New")
         }
       }
@@ -36,6 +39,7 @@ const Message = ({ message }) => {
       if (res.status === 200) {
         toast.success("Message Deleted")
         setIsDeleted(true)
+        setUnreadCount((prev) => prev - 1)
       }
     } catch (error) {
       console.log(error)
