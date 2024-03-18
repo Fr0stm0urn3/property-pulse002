@@ -21,7 +21,6 @@ const MainLayout = ({ children }) => {
             <Navbar />
             <div className="flex flex-col justify-between min-h-screen">
               <main>{children}</main>
-
               <Footer />
               <ToastContainer />
             </div>

@@ -37,9 +37,9 @@ const Message = ({ message }) => {
       const res = await fetch(`/api/messages/${message._id}`, { method: "DELETE" })
 
       if (res.status === 200) {
-        toast.success("Message Deleted")
         setIsDeleted(true)
-        setUnreadCount((prev) => prev - 1)
+        toast.success("Message Deleted")
+        setUnreadCount((prev) => (isRead ? prev : prev - 1))
       }
     } catch (error) {
       console.log(error)
