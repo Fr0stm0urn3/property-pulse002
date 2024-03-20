@@ -1,7 +1,7 @@
 import PropertyCard from "@/components/PropertyCard"
 import properties from "@/properties.json"
 
-const PropertiesPage = () => {
+const PropertiesPage = async () => {
   return (
     <div>
       <section className="px-4 py-6">
