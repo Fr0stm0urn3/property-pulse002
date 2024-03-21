@@ -7,6 +7,7 @@ import PropertyHeaderImage from "@/components/PropertyHeaderImage"
 import Link from "next/link"
 import { FaArrowCircleLeft } from "react-icons/fa"
 import PropertyDetails from "@/components/PropertyDetails"
+import Spinner from "@/components/Spinner"
 
 const PropertyPage = () => {
   const { id } = useParams()
@@ -35,7 +36,9 @@ const PropertyPage = () => {
     return <h1 className="text-center text-2xl font-bold mt-10">Property Not Found.</h1>
   }
 
-  return (
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
     <>
       {!loading && property && (
         <>
