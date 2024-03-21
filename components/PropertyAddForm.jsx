@@ -36,9 +36,68 @@ const PropertyAddForm = () => {
     setMounted(true)
   }, [])
 
-  const handleChange = (e) => {}
-  const handleAmenitiesChange = (e) => {}
-  const handleImagesChange = (e) => {}
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    //Check if nested property
+    if (name.includes(".")) {
+      const [outerKey, innerKey] = name.split(".")
+
+      setFields((prevFields) => ({
+        ...prevFields,
+        [outerKey]: {
+          ...prevFields[outerKey],
+          [innerKey]: value,
+        },
+      }))
+    } else {
+      //Not nested
+      setFields((prevFields) => ({
+        ...prevFields,
+        [name]: value,
+      }))
+    }
+  }
+
+  const handleAmenitiesChange = (e) => {
+    const { checked, value } = e.target
+
+    const updatedAmenities = [...fields.amenities]
+
+    if (checked) {
+      //Add value to array
+      updatedAmenities.push(value)
+    } else {
+      const index = updatedAmenities.indexOf(value)
+
+      if (index !== -1) {
+        updatedAmenities.splice(index, 1)
+      }
+    }
+    setFields((prevFields) => ({
+      ...prevFields,
+      amenities: updatedAmenities,
+    }))
+  }
+
+  const handleImagesChange = (e) => {
+    const { files } = e.target
+
+    //Clone images array
+    const updatedImages = [...fields.images]
+
+    //Add new fields to the array
+    for (const file of files) {
+      updatedImages.push(file)
+    }
+
+    //Update state with array of images
+
+    setFields((prevFields) => ({
+      ...prevFields,
+      images: updatedImages,
+    }))
+  }
 
   return (
     mounted && (
@@ -421,7 +480,7 @@ const PropertyAddForm = () => {
           <input
             type="text"
             id="seller_name"
-            name="seller_info.name."
+            name="seller_info.name"
             className="border rounded w-full py-2 px-3"
             placeholder="Name"
             value={fields.seller_info.name}
