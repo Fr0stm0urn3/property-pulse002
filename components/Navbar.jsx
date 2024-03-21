@@ -28,8 +28,6 @@ const Navbar = () => {
     window.addEventListener("resize", () => setIsMobileMenuOpen(false))
   }, [])
 
-  console.log(providers)
-
   return (
     <nav className="bg-slate-700 border-b border-purple-500">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
