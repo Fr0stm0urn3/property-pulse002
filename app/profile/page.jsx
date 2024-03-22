@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react"
 import { useState, useEffect } from "react"
 import Spinner from "@/components/Spinner"
 import Link from "next/link"
+import { toast } from "react-toastify"
 
 const ProfilePage = () => {
   const { data: session } = useSession()
@@ -42,7 +43,25 @@ const ProfilePage = () => {
     }
   }, [session])
 
-  const handleDeleteProperty = () => {}
+  const handleDeleteProperty = async (propertyId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this property?")
+    if (!confirmed) return
+
+    try {
+      const res = await fetch(`/api/properties/${propertyId}`, { method: "DELETE" })
+
+      if (res.status === 200) {
+        const updatedProperties = properties.filter(
+          (property) => property._id !== propertyId
+        )
+        setProperties(updatedProperties)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return loading ? (
     <Spinner loading={loading} />
