@@ -1,0 +1,75 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import "mapbox-gl/dist/mapbox-gl.css"
+import { setDefaults, fromAddress } from "react-geocode"
+import Map, { Marker } from "react-map-gl"
+import Spinner from "@/components/Spinner"
+import Image from "next/image"
+import pin from "@/assets/images/pin.svg"
+
+const PropertyMap = ({ property }) => {
+  const [lat, setLat] = useState(null)
+  const [lng, setLng] = useState(null)
+  const [viewPort, setViewPort] = useState({
+    latitude: 0,
+    longitude: 0,
+    zoom: 12,
+    width: "100%",
+    height: "500px",
+  })
+  const [loading, setLoading] = useState(true)
+
+  setDefaults({
+    key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY,
+    language: "en",
+    region: "us",
+  })
+
+  useEffect(() => {
+    const fetchCoords = async () => {
+      const res = await fromAddress(
+        `${property.location.street} ${property.location.city} ${property.location.state} ${property.location.zipcode}`
+      )
+
+      const { lat, lng } = await res.results[0].geometry.location
+
+      setLat(lat)
+      setLng(lng)
+      setViewPort({
+        ...viewPort,
+        latitude: lat,
+        longitude: lng,
+      })
+
+      setLoading(false)
+    }
+    fetchCoords()
+  }, [])
+
+  if (loading) {
+    return <Spinner loading={loading} />
+  }
+
+  return (
+    !loading && (
+      <Map
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+        mapLib={import("mapbox-gl")}
+        initialViewState={{
+          longitude: lng,
+          latitude: lat,
+          zoom: 15,
+        }}
+        style={{ width: "100%", height: 500 }}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+      >
+        <Marker longitude={lng} latitude={lat} anchor="bottom">
+          <Image src={pin} alt="Location" width={40} height={40} priority={true} />
+        </Marker>
+      </Map>
+    )
+  )
+}
+
+export default PropertyMap
