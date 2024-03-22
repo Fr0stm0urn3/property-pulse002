@@ -20,7 +20,7 @@ export const GET = async (request, { params }) => {
   }
 }
 
-DELETE /api/properties/:id
+// DELETE /api/properties/:id
 export const DELETE = async (request, { params }) => {
   try {
     const propertyId = params.id
@@ -55,4 +55,3 @@ export const DELETE = async (request, { params }) => {
     return new Response("Something Went Wrong", { status: 500 })
   }
 }
-

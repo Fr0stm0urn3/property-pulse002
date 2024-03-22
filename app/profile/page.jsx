@@ -55,9 +55,11 @@ const ProfilePage = () => {
           (property) => property._id !== propertyId
         )
         setProperties(updatedProperties)
+        toast.success("Property Deleted.")
       }
     } catch (error) {
       console.log(error)
+      toast.error("Failed To Delete Property.")
     } finally {
       setLoading(false)
     }
