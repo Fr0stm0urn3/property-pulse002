@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { fetchProperty } from "@/utils/requests"
 import { useParams, useRouter } from "next/navigation"
 import { toast } from "react-toastify"
+import Spinner from "@/components/Spinner"
 
 const PropertyEditForm = () => {
   const { id } = useParams()
@@ -115,11 +116,33 @@ const PropertyEditForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    try {
+      const formData = new FormData(e.target)
+
+      const res = await fetch(`/api/properties/${id}`, {
+        method: "PUT",
+        body: formData,
+      })
+
+      if (res.status === 200) {
+        router.push(`/properties/${id}`)
+        toast.success("Property Updated.")
+      } else if (res.status === 401 || res.status === 403) {
+        toast.error("Permission denied.")
+      } else {
+        toast.error("Something went wrong.")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong.")
+    }
   }
 
-  return (
-    mounted &&
-    !loading && (
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
+    mounted && !loading && (
       <form onSubmit={handleSubmit}>
         <h2 className="text-3xl text-center font-semibold mb-6">Edit Property</h2>
 
