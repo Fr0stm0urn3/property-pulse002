@@ -69,7 +69,7 @@ export const POST = async (request) => {
 
     for (const image of images) {
       const imageBuffer = await image.arrayBuffer()
-      const imageArray = Array.from(new Unit8Array(imageBuffer))
+      const imageArray = Array.from(new Uint8Array(imageBuffer))
       const imageData = Buffer.from(imageArray)
 
       //Covert the image data to base64
