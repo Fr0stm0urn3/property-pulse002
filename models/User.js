@@ -16,12 +16,14 @@ const UserSchema = new Schema(
     },
     bookmarks: [
       {
-        type: Boolean,
+        type: Schema.Types.ObjectId,
         ref: "Property",
       },
     ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 )
 
 const User = models.User || model("User", UserSchema)
