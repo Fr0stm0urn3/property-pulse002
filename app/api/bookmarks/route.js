@@ -5,6 +5,7 @@ import { getSessionUser } from "@/utils/getSessionUser"
 
 export const dynamic = "force-dynamic"
 
+//POST /api/bookmarks
 export const POST = async (request) => {
   try {
     await connectDB()
