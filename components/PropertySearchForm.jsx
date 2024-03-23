@@ -17,8 +17,6 @@ const PropertySearchForm = () => {
       const query = `?location=${location}&propertyType=${propertyType}`
       router.push(`/properties/search-results${query}`)
     }
-
-    console.log(location, propertyType)
   }
 
   return (
