@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Spinner from "./Spinner"
+import Spinner from "@/components/Spinner"
 import PropertyCard from "./PropertyCard"
+import Pagination from "./Pagination"
 
 const Properties = () => {
   const [properties, setProperties] = useState([])
@@ -15,6 +16,7 @@ const Properties = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
+        setLoading(true)
         const res = await fetch(`/api/properties?page=${page}&pageSize=${pageSize}`)
 
         if (!res.ok) {
@@ -31,7 +33,11 @@ const Properties = () => {
       }
     }
     fetchProperties()
-  }, [])
+  }, [page, pageSize])
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage)
+  }
 
   return loading ? (
     <Spinner loading={loading} />
@@ -47,6 +53,12 @@ const Properties = () => {
             ))
           )}
         </div>
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          onPageChange={handlePageChange}
+        />
       </div>
     </section>
   )
