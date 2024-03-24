@@ -8,8 +8,6 @@ const BookmarkButton = ({ property }) => {
   const { data: session } = useSession()
   const userId = session?.user?.id
 
-  console.log(session)
-
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [loading, setLoading] = useState(true)
 
