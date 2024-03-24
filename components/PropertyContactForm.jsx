@@ -24,9 +24,34 @@ const PropertyContactForm = ({ property }) => {
       property: property._id,
     }
 
-    console.log(data)
+    try {
+      const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
 
-    setWasSubmitted(true)
+      if (res.status === 200) {
+        const objData = await res.json()
+        toast.success(objData.message)
+        setWasSubmitted(true)
+      } else if (res.status === 400 || res.status === 401) {
+        const objData = await res.json()
+        toast.error(objData.message)
+      } else {
+        toast.error("Error sending message")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Error sending message")
+    } finally {
+      setName("")
+      setEmail("")
+      setMessage("")
+      setPhone("")
+    }
   }
 
   return (
