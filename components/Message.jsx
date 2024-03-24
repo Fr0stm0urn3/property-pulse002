@@ -6,6 +6,7 @@ import Spinner from "./Spinner"
 
 const Message = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read)
+  const [isDeleted, setIsDelete] = useState(false)
 
   const handleReadClick = async () => {
     try {
@@ -25,7 +26,23 @@ const Message = ({ message }) => {
       toast.error("Something went wrong.")
     }
   }
-  const handleDelete = () => {}
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/messages/${message._id}`, { method: "DELETE" })
+
+      if (res.status === 200) {
+        setIsDelete(true)
+        toast.success("Message Deleted.")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Failed to delete the message.")
+    }
+  }
+
+  if (isDeleted) {
+    return null
+  }
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
