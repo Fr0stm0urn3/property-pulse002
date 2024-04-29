@@ -1,3 +1,26 @@
+Welcome to our Property Rental Platform! Our website serves as a convenient hub for users to list properties available for rent and for potential tenants to discover available properties.
+
+Features
+
+- Property Listing: Easily create detailed listings for your properties, including descriptions, photos, and rental terms.
+- Search and Filter: Find properties based on location, price range, amenities, and more.
+- Messaging System: Communicate with property owners or potential tenants through our built-in messaging system.
+
+How to Use
+
+For Property Owners
+
+1. Sign Up/Login: Create an account or log in.
+2. Create a Listing: Fill out property details.
+3. Manage Listings: Keep track of listed properties and communicate with tenants.
+
+For Tenants
+
+1. Sign Up/Login: Create an account or log in.
+2. Search for Properties: Use search and filter options.
+3. Contact Property Owners: Reach out to owners directly.
+4. Submit Rental Applications: Apply for properties.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
