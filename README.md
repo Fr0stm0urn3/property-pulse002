@@ -1,5 +1,7 @@
 Welcome to our Property Rental Platform! Our website serves as a convenient hub for users to list properties available for rent and for potential tenants to discover available properties.
 
+Created with HTML, Tailwind, Next.JS, MongoDB. (Additionally: Cloudinary, MapBox, NextAuth).
+
 Features
 
 - Property Listing: Easily create detailed listings for your properties, including descriptions, photos, and rental terms.
