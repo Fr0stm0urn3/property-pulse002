@@ -52,17 +52,17 @@ const PropertyCard = ({ property }) => {
 
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
           {property.rates.nightly && (
-            <p>
+            <p className="flex items-center">
               <FaMoneyBill className="inline-block mr-2" /> Nightly
             </p>
           )}
           {property.rates.weekly && (
-            <p>
+            <p className="flex items-center">
               <FaMoneyBill className="inline-block mr-2" /> Weekly
             </p>
           )}
           {property.rates.monthly && (
-            <p>
+            <p className="flex items-center">
               <FaMoneyBill className="inline-block mr-2" /> Monthly
             </p>
           )}
